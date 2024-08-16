@@ -1,0 +1,457 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: 'Lobster', cursive; */
+}
+
+/* Navbar styles */
+.nav-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #f0f0f0;
+}
+
+.logo {
+  width: 8%;
+}
+
+.logo h1 {
+  font-size: 20px;
+}
+
+.logo h1 span {
+  color: red;
+}
+
+.nav-menu {
+  width: 45%;
+}
+
+.nav-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-left: 50px;
+}
+
+.nav-menu ul li {
+  position: relative;
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.nav-menu ul li:hover .submenu {
+  display: block;
+}
+
+.nav-menu ul li a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  left: -60px;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding: 10px 0;
+  min-width: 150px;
+}
+
+.submenu li {
+  clear: both;
+  width: 100%;
+  text-align: left;
+}
+
+.submenu li a {
+  padding: 8px 15px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+
+.submenu li a:hover {
+  background-color: #f2f2f2;
+}
+
+.sear {
+  width: 17%;
+  position: relative;
+}
+
+.sear input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.sear i {
+  position: absolute;
+  top: 50%;
+  right: 1px;
+  transform: translateY(-50%);
+  color: #fbf6f6;
+  background-color: #525858;
+  padding: 10px;
+}
+
+.nav-btn {
+  width: 15%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-btn a:first-child {
+  margin-left: 10px;
+
+}
+.nav-btn a {
+  display: block;
+  background-color: #FF564F;
+  color: white;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.nav-btn a:hover {
+  background-color: #564FFF;
+}
+
+.profile, .Cart {
+  width: 5%;
+  text-align: center;
+}
+
+.profile a, .Cart a {
+  display: block;
+  text-decoration: none;
+  color: #333;
+}
+
+.profile a:hover, .Cart a:hover {
+  color: #564FFF;
+}
+
+.profile i, .Cart i {
+  font-size: 20px;
+}
+
+
+.banner {
+  background-color: #e88787;
+  padding: 50px 20px;
+  text-align: center;
+
+ 
+}
+
+.banner h2 {
+  margin: 0;
+  font-size: 2.5em;
+}
+
+.banner p {
+  font-size: 1.2em;
+}
+
+.banner button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.all-item-container {
+padding: 20px;
+
+}
+.anchor{
+text-decoration: none;
+}
+.product-card {
+background-color: #fff;
+border: 1px solid #ddd;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+overflow: hidden;
+transition: transform 0.3s, box-shadow 0.3s;
+width: 300px; /* Fixed width for each product card */
+text-align: center;
+display: flex; /* Use flexbox for vertical alignment */
+flex-direction: column; /* Stack elements vertically */
+}
+
+.product-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+width: 100%;
+height: auto;
+max-height: 250px; /* Limit maximum height of image */
+object-fit: cover; /* Maintain aspect ratio and cover the container */
+border-bottom: 1px solid #ddd; /* Add a subtle border to separate image */
+}
+
+.product-title {
+font-size: 1.5em;
+margin: 15px 0;
+color: #333;
+}
+
+.product-description {
+font-size: 1em;
+color: #777;
+margin: 10px 20px;
+}
+
+.product-price {
+font-size: 1.2em;
+color: #e74c3c;
+margin: 10px 0;
+}
+
+.add-to-cart {
+background-color: #e74c3c;
+color: white;
+border: none;
+padding: 10px 20px;
+margin: 15px 0;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.add-to-cart a {
+color: white;
+text-decoration: none;
+}
+
+.add-to-cart:hover {
+background-color: #c0392b;
+}
+
+
+
+#buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#displayArea {
+  margin-top: 20px;
+}
+
+footer {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+}
+
+
+.data-container{
+  display: grid;
+  grid-template-columns: auto auto;
+  background-color: #e2eded;
+  padding: 30px;
+}
+
+.dress-text{
+  background-color: white;
+  padding: 20px;
+}
+.dress-text h2, .dress-p{
+font-size: 40px;
+}
+
+.dress-text p{
+  margin-top: 20px;
+  font-size: 20px;
+  }
+
+  .dress-btns button ,.orders-btn{
+    background-color: #e74c3c;
+    margin-top: 30px;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+  }
+
+
+
+
+          /* Style for the display area */
+#displayArea {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Container for displaying dress details */
+.data-container {
+  display: flex;
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* Style for the dress image */
+.dress-img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Style for the text area next to the image */
+.dress-text {
+  max-width: 600px;
+}
+
+/* Style for headings and paragraphs in the dress text section */
+.dress-text h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.dress-text .dress-p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.dress-text p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* Style for the buttons and quantity input section */
+.dress-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dress-btns label {
+  font-size: 16px;
+  color: #333;
+}
+
+.dress-btns input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.dress-btns button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dress-btns button:hover {
+  background-color: #0056b3;
+}
+
+.dress-btns button:active {
+  background-color: #004494;
+}
+
+
+
+
+
+/*Register form */
+.reg-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: azure;
+
+}
+.reg-h2{
+  text-align: center;
+}
+.reg-h6{
+  margin-left: 40px;
+  font-size: 20px;
+  margin-top: 10px;
+}
+.reg-h6 span{
+  background-color: blue;
+  color: white;
+  padding: 2px 4px 2px 4px;
+  border-radius: 10px;
+  margin-left: 5px;
+}
+.reg-main{
+  background-color: white;
+  padding-top: 20px;
+  
+}
+.reg-form{
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+ padding: 40px;
+  
+}
+.reg-form label{
+  display: block;
+margin-bottom: 10px;
+}
+.reg-form .input-box .email{
+width: 300px;
+}
+
+.reg-form .input-box input{
+  width: 300px;
+  padding: 10px;
+  border: 1px solid grey;
+  border-radius: 2px;
+  }
+.check{
+ position: relative;
+  display: flex;
+  top:20px ;
+}
+.btn{
+  position: relative;
+  left: 150px;
+  top: 10px;
+  background-color: blue;
+  color: white;
+  border: none;
+  font-size: 15px;
+ 
+}
+
+

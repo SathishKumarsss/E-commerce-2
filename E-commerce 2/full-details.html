@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js"></script>
+     <link rel="stylesheet" href="style.css"> 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+      <!-- Navbar start -->
+<div class="nav-main">
+    <div class="logo">
+        <h1><span>Fashion</span>Plus</h1>
+    </div>
+    
+    <div class="nav-menu">
+        <ul>
+            <li><a href="#">Men</a>
+                <ul class="submenu">
+                    <li><a href="shirt.html">Shirts</a></li>
+                    <li><a href="jeans.html">Pants</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Women</a>
+                <ul class="submenu">
+                    <li><a href="sarees.html">Sarees</a></li>
+                    <li><a href="kurtis.html">Kurtis</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Kids</a>
+                <ul class="submenu">
+                    <li><a href="boys.html">Boys</a></li>
+                    <li><a href="girls.html">Girls</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Electronics</a>
+                <ul class="submenu">
+                    <li><a href="electronic.html">Home Products</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="sear">
+        <input type="text" id="product-search" placeholder="Search here...">
+        <i class="fas fa-search" id="search-icon" onclick="filterProducts()"></i>
+    </div>
+
+    <div class="nav-btn">
+        <a href="login.html" class="login">Login</a>
+        <a href="validation.html">Register</a>
+    </div>
+
+    <div class="profile">
+        <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <h6>Profile</h6>
+        </a>
+    </div>
+    <div class="profile">
+        <a href="your-order.html">
+            <i class="fas fa-user"></i>
+            <h6>Your Orders</h6>
+        </a>
+    </div>
+    <div class="Cart">
+        <a href="your-order.html">
+            <i class="fas fa-shopping-cart"></i>
+            <h6>Cart (<span id="cart-count">0</span>)</h6>
+        </a>
+    </div>
+</div>
+
+
+
+<div id="displayArea"></div>
+
+<script>
+   function displayContent() {
+    const selectedId = localStorage.getItem('selectedButtonId');
+    const displayArea = document.getElementById('displayArea');
+    const buttonsData = JSON.parse(localStorage.getItem('buttonsData')) || [];
+  
+    if (selectedId !== null) {
+        const dressData = buttonsData.find(item => item.id == selectedId);
+        if (dressData) {
+            displayArea.innerHTML = `
+            <div class="data-container">
+                <div>
+                    <img src="${dressData.img}" alt="${dressData.name}" class="dress-img">   
+                </div>
+                <div class="dress-text">
+                    <h2>${dressData.name}</h2>
+                    <p class="dress-p">Price: ₹${dressData.price}</p>   
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa accusantium, aspernatur provident beatae corporis veniam atque facilis, consequuntur assumenda, vitae dignissimos iste exercitationem dolor eveniet alias eos ullam nesciunt voluptatum.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore accusamus natus dolorum. Quaerat nulla quod doloremque, officia quis provident amet adipisci unde esse iure delectus, maxime inventore optio fuga nisi?</p>
+                    <div class="dress-btns">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1">
+                        <button onclick="addToCart(${dressData.id})">Add to Cart</button>
+                        <button onclick="addToCart(${dressData.id})">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            `;
+        } else {
+            displayArea.textContent = 'No dress data found.';
+        }
+    } else {
+        displayArea.textContent = 'No dress has been clicked.';
+    }
+}
+displayContent();
+
+
+</script> 
+
+
+
+
+</body>
+</html>

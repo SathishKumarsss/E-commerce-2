@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body style="background-color: whitesmoke;">
+   <!-- Navbar start -->
+<div class="nav-main">
+    <div class="logo">
+        <h1><span>Fashion</span>Plus</h1>
+    </div>
+    
+    <div class="nav-menu">
+        <ul>
+            <li><a href="#">Men</a>
+                <ul class="submenu">
+                    <li><a href="shirt.html">Shirts</a></li>
+                    <li><a href="jeans.html">Pants</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Women</a>
+                <ul class="submenu">
+                    <li><a href="sarees.html">Sarees</a></li>
+                    <li><a href="kurtis.html">Kurtis</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Kids</a>
+                <ul class="submenu">
+                    <li><a href="boys.html">Boys</a></li>
+                    <li><a href="girls.html">Girls</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Electronics</a>
+                <ul class="submenu">
+                    <li><a href="electronic.html">Home Products</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="sear">
+        <input type="text" id="product-search" placeholder="Search here...">
+        <i class="fas fa-search" id="search-icon" onclick="filterProducts()"></i>
+    </div>
+
+    <div class="nav-btn">
+        <a href="login.html" class="login">Login</a>
+        <a href="validation.html">Register</a>
+    </div>
+
+    <div class="profile">
+        <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <h6>Profile</h6>
+        </a>
+    </div>
+    <div class="profile">
+        <a href="your-order.html">
+            <i class="fas fa-user"></i>
+            <h6>Your Orders</h6>
+        </a>
+    </div>
+    <div class="Cart">
+        <a href="products-cart.html">
+            <i class="fas fa-shopping-cart"></i>
+            <h6>Cart (<span id="cart-count">0</span>)</h6>
+        </a>
+    </div>
+</div>
+
+<h1>Shopping Cart</h1>
+
+<table id="cartTable">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="cartContainer"></tbody>
+    
+    <tfoot>
+        <tr id="cgstRow" style="display: none;">
+            <td colspan="4">CGST (9%)</td>
+            <td id="cgstAmount">₹0.00</td>
+            <td></td>
+        </tr>
+        <tr id="sgstRow" style="display: none;">
+            <td colspan="4">SGST (9%)</td>
+            <td id="sgstAmount">₹0.00</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="4">Total Price</td>
+            <td id="totalPrice">₹0.00</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="4">Final Amount</td>
+            <td id="finalAmount">₹0.00</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <button onclick="placeOrder()">Place Order</button>
+            </td>
+        </tr>
+    </tfoot>
+    
+    
+</table>
+
+<script>
+
+
+function renderCartItems() {
+    const cart = JSON.parse(localStorage.getItem('cart')) ;
+    const cartContainer = document.getElementById('cartContainer');
+    const totalPriceContainer = document.getElementById('totalPrice');
+    const cgstRow = document.getElementById('cgstRow');
+    const sgstRow = document.getElementById('sgstRow');
+    const cgstAmount = document.getElementById('cgstAmount');
+    const sgstAmount = document.getElementById('sgstAmount');
+    const finalAmountContainer = document.getElementById('finalAmount');
+
+    cartContainer.innerHTML = '';
+    let totalPrice = 0;
+
+    cart.forEach(item => {
+        const cartRow = document.createElement('tr');
+
+        cartRow.innerHTML = `
+            <td><img src="${item.productImage}" alt="${item.productName}" class="cart-item-img"></td>
+            <td>${item.productName}</td>
+            <td>₹${parseFloat(item.productPrice).toFixed(2)}</td>
+            <td><input type="number" min="1" value="${item.quantity}" onchange="updateQuantity(${item.id}, this.value)"></td>
+            <td>₹${(parseFloat(item.productPrice) * item.quantity).toFixed(2)}</td>
+            <td><button onclick="deleteItem(${item.id})">Delete</button></td>
+        `;
+
+        cartContainer.appendChild(cartRow);
+        totalPrice += parseFloat(item.productPrice) * item.quantity;
+    });
+
+    totalPriceContainer.innerHTML = `${totalPrice.toFixed(2)}`;
+
+    // Calculate CGST and SGST (assuming 9% for both)
+    const cgst = totalPrice * 0.09;
+    const sgst = totalPrice * 0.09;
+
+    cgstAmount.innerHTML = `${cgst.toFixed(2)}`;
+    sgstAmount.innerHTML = `${sgst.toFixed(2)}`;
+
+    // Show CGST and SGST rows if the values are greater than 0
+    cgstRow.style.display = cgst > 0 ? 'table-row' : 'none';
+    sgstRow.style.display = sgst > 0 ? 'table-row' : 'none';
+
+    // Calculate and display the final amount
+    const finalAmount = totalPrice + cgst + sgst;
+    finalAmountContainer.innerHTML = `${finalAmount.toFixed(2)}`;
+}
+
+function updateQuantity(id, newQuantity) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart = cart.map(item => {
+        
+        if (item.id === id) {
+            item.quantity = parseInt(newQuantity, 10);
+        }
+        return item;
+        
+    });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCartItems();
+}
+
+function deleteItem(id) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCartItems();
+}
+
+function placeOrder() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (cart.length === 0) {
+        alert('Your cart is empty. Please add items before placing an order.');
+        return;
+    }
+
+    // Generate a unique order ID (for simplicity, you can use a timestamp)
+    const orderId = Date.now();
+
+    // Create an order object
+    const order = {
+        orderId: orderId,
+        orderDate: new Date().toLocaleString(),
+        totalPrice: calculateTotalPrice(cart),
+        items: cart,
+        finalAmount: document.getElementById('finalAmount').textContent
+    };
+
+    // Store the order in localStorage (You can save multiple orders in an array)
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    orders.push(order);
+    localStorage.setItem('orders', JSON.stringify(orders));
+
+    // Clear the cart
+    localStorage.removeItem('cart');
+
+    // Redirect to the order confirmation page
+    window.location.href = 'your-order.html';
+}
+
+function calculateTotalPrice(cart) {
+    return cart.reduce((total, item) => {
+        return total + (parseFloat(item.productPrice) * item.quantity);
+    }, 0);
+}
+
+renderCartItems();
+
+</script>
+
+<!-- Inline CSS -->
+<style>
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px solid #ccc;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+
+    td img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    tfoot td {
+        font-weight: bold;
+        text-align: right;
+    }
+
+    input[type="number"] {
+        width: 60px;
+        text-align: center;
+    }
+
+    button {
+        background-color: #ff4c4c;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #cc0000;
+    }
+</style>
+</body>
+</html>

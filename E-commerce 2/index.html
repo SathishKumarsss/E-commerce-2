@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dress Click Example</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css"> 
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   
+    
+</head>
+<body>
+    <!-- Navbar start -->
+<div class="nav-main">
+    <div class="logo">
+        <h1><span>Fashion</span>Plus</h1>
+    </div>
+    
+    <div class="nav-menu">
+        <ul>
+            <li><a href="#">Men</a>
+                <ul class="submenu">
+                    <li><a href="shirt.html">Shirts</a></li>
+                    <li><a href="jeans.html">Pants</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Women</a>
+                <ul class="submenu">
+                    <li><a href="sarees.html">Sarees</a></li>
+                    <li><a href="kurtis.html">Kurtis</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Kids</a>
+                <ul class="submenu">
+                    <li><a href="boys.html">Boys</a></li>
+                    <li><a href="girls.html">Girls</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Electronics</a>
+                <ul class="submenu">
+                    <li><a href="electronic.html">Home Products</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="sear">
+        <input type="text" id="product-search" placeholder="Search here...">
+        <i class="fas fa-search" id="search-icon" onclick="filterProducts()"></i>
+    </div>
+
+    <div class="nav-btn">
+        <a href="login.html" class="login">Login</a>
+        <a href="validation.html">Register</a>
+    </div>
+
+    <div class="profile">
+        <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <h6>Profile</h6>
+        </a>
+    </div>
+    <div class="profile">
+        <a href="your-order.html">
+            <i class="fas fa-user"></i>
+            <h6>Your Orders</h6>
+        </a>
+    </div>
+    <div class="Cart">
+        <a href="products-cart.html">
+            <i class="fas fa-shopping-cart"></i>
+            <h6>Cart (<span id="cart-count">0</span>)</h6>
+        </a>
+    </div>
+</div>
+
+
+
+    <section class="banner">
+        <h2>Welcome to Our Fashion Store</h2>
+        <p>Discover the latest in fashions, dress, and more.</p>
+        <button onclick="showMore()">Learn More</button>
+    </section>
+
+    
+    
+    <div id="buttonsContainer"></div>
+    
+    <footer>
+        <p>&copy; 2024 fashion Inc. All rights reserved.</p>
+    </footer>
+<script>
+    // Updated array of objects with dress details and local image paths
+    const buttonsData = [
+            { id: 0, name: 'Brown shirt', price: '50', img: 'images/2.webp' },
+            { id: 1, name: 'Blue shirt', price: '60', img: 'images/1.webp' },
+            { id: 2, name: 'Pink Dress', price: '70', img: 'images/3.webp' },
+            { id: 3, name: 'Blue Line Dress', price: '80', img: 'images/men-1.webp' },
+            { id: 4, name: 'Red Saree', price: '90', img: 'images/women-3.webp' },
+            { id: 5, name: 'Red Kurthi', price: '90', img: 'images/kurtis-2.webp' }
+        ];
+        
+        // Store buttonsData in localStorage
+        localStorage.setItem('buttonsData', JSON.stringify(buttonsData));
+        const Data = JSON.parse(localStorage.getItem('buttonsData'));
+        // Create buttons dynamically
+        const buttonsContainer = document.getElementById('buttonsContainer');
+        Data.forEach(data => {
+            const button = document.createElement('td');
+            button.setAttribute('data-id', data.id);
+            button.onclick = () => handleButtonClick(data.id);
+            
+            // Create content for the button
+            button.innerHTML = `
+            
+             <div class="all-item-container">
+        <a href="full-details.html" class="anchor">
+        <div class="product-card">
+         <img src="${data.img}" alt="${data.name}"  class="product-image">
+        <h3 class="product-title">${data.name}</h3>
+        
+        <p class="product-description">This is cross fabric shirt.</p>
+        <p class="product-price">Price: ₹${data.price}</p>
+        
+        <button class="add-to-cart">See more</a></button>
+        </div>
+        </a>
+        </div>    
+            `;
+            
+            buttonsContainer.appendChild(button);
+        });
+
+
+        function handleButtonClick(id) {
+         
+     localStorage.setItem('selectedButtonId', id);
+     
+   
+ }
+</script>
+</body>
+</html> 
+
+
+        
+
+      

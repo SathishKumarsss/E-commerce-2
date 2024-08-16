@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<!-- Navbar start -->
+<div class="nav-main">
+    <div class="logo">
+        <h1><span>Fashion</span>Plus</h1>
+    </div>
+    
+    <div class="nav-menu">
+        <ul>
+            <li><a href="#">Men</a>
+                <ul class="submenu">
+                    <li><a href="shirt.html">Shirts</a></li>
+                    <li><a href="jeans.html">Pants</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Women</a>
+                <ul class="submenu">
+                    <li><a href="sarees.html">Sarees</a></li>
+                    <li><a href="kurtis.html">Kurtis</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Kids</a>
+                <ul class="submenu">
+                    <li><a href="boys.html">Boys</a></li>
+                    <li><a href="girls.html">Girls</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Electronics</a>
+                <ul class="submenu">
+                    <li><a href="electronic.html">Home Products</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="sear">
+        <input type="text" id="product-search" placeholder="Search here...">
+        <i class="fas fa-search" id="search-icon" onclick="filterProducts()"></i>
+    </div>
+
+    <div class="nav-btn">
+        <a href="login.html" class="login">Login</a>
+        <a href="validation.html">Register</a>
+    </div>
+
+    <div class="profile">
+        <a href="profile.html">
+            <i class="fas fa-user"></i>
+            <h6>Profile</h6>
+        </a>
+    </div>
+    <div class="profile">
+        <a href="your-order.html">
+            <i class="fas fa-user"></i>
+            <h6>Your Orders</h6>
+        </a>
+    </div>
+    <div class="Cart">
+        <a href="products-cart.html">
+            <i class="fas fa-shopping-cart"></i>
+            <h6>Cart (<span id="cart-count">0</span>)</h6>
+        </a>
+    </div>
+</div>
+
+<h1 style="text-align: center;">Your Orders</h1>
+
+<div id="ordersContainer">
+    <!-- Orders will be dynamically added here -->
+</div>
+<button onclick="remove()" class="orders-btn">Remove History</button>
+<script>
+    
+
+    document.addEventListener('DOMContentLoaded', function() {
+        renderOrders();
+    });
+
+    function renderOrders() {
+        const orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+        const ordersContainer = document.getElementById('ordersContainer');
+        ordersContainer.innerHTML = ''; // Clear previous content
+
+        if (orders.length === 0) {
+            ordersContainer.innerHTML = '<p>No orders placed yet.</p>';
+        } else {
+            orders.forEach(order => {
+                const orderElement = document.createElement('table');
+                orderElement.classList.add('order-table');
+
+                let orderItemsHTML = '';
+                order.items.forEach(item => {
+                    orderItemsHTML += `
+                    <tr class="order-item-row">
+                        <td class="order-item-img-container">
+                            <img src="${item.productImage}" alt="${item.productName}" class="order-item-img">
+                        </td>
+                        <td class="order-item-content">
+                            <p><strong>Item:</strong> ${item.productName}</p>
+                            <p><strong>Quantity:</strong> ${item.quantity}</p>
+                        </td>
+                    </tr>`;
+                });
+
+                orderElement.innerHTML = `
+                    <caption>Order ID: ${order.orderId}</caption>
+                    <tr>
+                        <td><sstrong>Order Date:</sstrong></td>
+                        <td>${order.orderDate}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Price:</strong></td>
+                        <td>₹${order.totalPrice.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Final Amount:</strong></td>
+                        <td>₹${order.finalAmount}</td>
+                    </tr>
+                    ${orderItemsHTML}
+                `;
+
+                ordersContainer.appendChild(orderElement);
+            });
+        }
+    }
+
+    function remove() {
+        // Clear local storage
+        localStorage.removeItem('orders');
+
+        // Re-render orders to reflect changes
+        renderOrders();
+    }
+</script>
+
+<!-- Inline CSS -->
+<style>
+ /* Your CSS styles for the orders page */
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.order-table caption {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.order-table th, .order-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.order-table th {
+    background-color: #f4f4f4;
+}
+
+.order-item-row {
+    vertical-align: middle; /* Align items in the middle vertically */
+}
+
+.order-item-img-container {
+    width: 100px;
+    height: 100px;
+}
+
+.order-item-img {
+    width: 100%; /* Fill the container width */
+    height: 100%; /* Fill the container height */
+    object-fit: cover; /* Maintain aspect ratio while covering the container */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.order-item-content {
+    padding-left: 15px; /* Space between image and content */
+}
+
+.order-item-content p {
+    margin: 5px 0;
+}
+
+.order-item-content strong {
+    font-weight: bold;
+}
+
+</style>
+</body>
+</html>
